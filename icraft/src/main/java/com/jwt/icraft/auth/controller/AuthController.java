@@ -29,11 +29,8 @@ public class AuthController {
 
         String token = authService.signIn(signInDto);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(TokenProvider.AUTHORIZATION_HEADER_NAME, TokenProvider.TOKEN_PREFIX + token);
-
         return ResponseEntity.ok()
-            .headers(httpHeaders)
+            .header(TokenProvider.AUTHORIZATION_HEADER_NAME, TokenProvider.TOKEN_PREFIX + token)
             .body("issue");
     }
 

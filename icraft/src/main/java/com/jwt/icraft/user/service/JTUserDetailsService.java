@@ -22,11 +22,8 @@ public class JTUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 
-        UserEntity userEntity = iUserRepository.findByUserId(userId).orElse(null);
-
-        if(Objects.isNull(userEntity)){
-            throw new UsernameNotFoundException("User Not Found");
-        }
+        UserEntity userEntity = iUserRepository.findByUserId(userId)
+            .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
 
         return new UserAdapter(userEntity);
     }

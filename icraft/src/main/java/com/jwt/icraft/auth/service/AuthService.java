@@ -27,11 +27,8 @@ public class AuthService {
     @Transactional
     public String signIn(SignInDto signInDto){
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            signInDto.createUsernamePasswordAuthenticationToken();
-
         Authentication authentication =
-            authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            authenticationManagerBuilder.getObject().authenticate(signInDto.createUsernamePasswordAuthenticationToken());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -41,14 +38,7 @@ public class AuthService {
     @Transactional
     public UserEntity signUp(SignUpDto signUpDto){
 
-        UserEntity userEntity = UserEntity.builder()
-            .userId(signUpDto.getUserId())
-            .userPassword(passwordEncoder.encode(signUpDto.getUserPassword()))
-            .userRole(signUpDto.getUserRole())
-            .build();
-
-
-        return iUserRepository.save(userEntity);
+        return iUserRepository.save(signUpDto.createUserEntity(passwordEncoder.encode(signUpDto.getUserPassword())));
     }
 
 
