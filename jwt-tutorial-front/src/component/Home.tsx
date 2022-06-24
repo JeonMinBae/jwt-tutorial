@@ -5,15 +5,12 @@ import axiosInstance from "../module/axiosInstance";
 const Home = () => {
 
     const navigate = useNavigate();
-    const accessToken = localStorage.getItem('token')
     const [result, setResult] = useState("");
 
 
     useEffect(() => {
-        if(!accessToken){
+        if(!localStorage.getItem('token')){
             navigate('sign-in');
-        }else{
-
         }
 
     }, [])
